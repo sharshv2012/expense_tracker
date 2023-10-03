@@ -24,7 +24,7 @@ class Expense {
   final DateTime date;
   final Category category;
 
-  String get formattedDate { // created a getter for formatting date. getter is used when we have to mutate any variable or element of the same class we are in.
-    return formatter.format(date);
+  String get formattedDate { // created a getter for formatting date. getter is used when we have
+    return formatter.format(date);//to mutate any variable or element of the same class we are in.
   }
 }
