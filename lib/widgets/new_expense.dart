@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class NewExpense extends StatefulWidget{
+class NewExpense extends StatefulWidget {
   const NewExpense({super.key});
 
   @override
@@ -10,23 +10,35 @@ class NewExpense extends StatefulWidget{
 }
 
 class _NewExpenseState extends State<NewExpense> {
+
+  var _enteredTitle = '';
+  void _saveTitleInput(String inputValue){
+    _enteredTitle = inputValue;
+  }
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-      
+    return Padding(
       padding: EdgeInsets.all(16),
       child: Column(
         children: [
           TextField(
+            onChanged: _saveTitleInput,
             maxLength: 50, //setting max string length
             keyboardType: TextInputType.number,
-            decoration: InputDecoration(
-              label: Text("Expense")
-            ),
+            decoration: InputDecoration(label: Text("Expense")),
           ),
+          Row(
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  print(_enteredTitle);
+                },
+                child: const Text("SAVE"),
+              ),
+            ],
+          )
         ],
       ),
-
     );
   }
 }
