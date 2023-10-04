@@ -12,6 +12,15 @@ class NewExpense extends StatefulWidget {
 class _NewExpenseState extends State<NewExpense> {
   final _titleController = TextEditingController();
   final _amountController = TextEditingController();
+
+  void _presentDatePicker(){
+    final now = DateTime.now();
+    final firstDate = DateTime(now.year - 1, now.month, now.day); // previous possible date
+    final lastDate = now;
+
+    showDatePicker(context: context, initialDate: now, firstDate: firstDate, lastDate: lastDate);
+  }
+
   @override
   void dispose() {
     // we'll have to delete the textEditingController after modal is not in use to free the memory.
@@ -38,15 +47,35 @@ class _NewExpenseState extends State<NewExpense> {
               border: OutlineInputBorder(),
             ),
           ),
-          TextField(
-            controller: _amountController,
-            maxLength: 10, //setting max string length
-            keyboardType: TextInputType.number,
-            decoration: const InputDecoration(
-              prefixText: "₹ ",
-              label: Text("Expense"),
-              border: OutlineInputBorder(),
-            ),
+          Row(
+            children: [
+              Expanded( //Same rendering issue can arise having TextField inside of a row that's why used Expanded.
+                child: TextField(
+                  controller: _amountController,
+                  maxLength: 10, //setting max string length
+                  keyboardType: TextInputType.number,
+                  decoration: const InputDecoration(
+                    prefixText: "₹ ",
+                    label: Text("Expense"),
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 16,),
+              Expanded(
+                child: Row(// we are having a row inside of a row which can cause rendering problem that's why we are using Expanded.
+                  mainAxisAlignment: MainAxisAlignment.end, // pushing icon and text to the end
+                  crossAxisAlignment: CrossAxisAlignment.center, // for centering the item vertically
+                  children: [
+                    const Text("Selected Date"),
+                    IconButton(
+                      onPressed: _presentDatePicker,
+                      icon: const Icon(Icons.calendar_month)
+                    ),
+                  ],
+                ) 
+                )
+            ],
           ),
           Row(
             children: [
