@@ -3,7 +3,7 @@ import 'package:uuid/uuid.dart'; // imported for terminal for unique ID's
 import 'package:intl/intl.dart'; // imported for terminal for Date Formatting and localization.
 
 const uuid = Uuid(); // for generating unique ID's
-final formatter = DateFormat.yMd(); // for formatting date passed to this object.
+final formatter = DateFormat('dd/MM/yyyy'); // for formatting date passed to this object.
 
 enum Category {leisure, food, work, travel }
 
