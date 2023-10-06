@@ -35,6 +35,31 @@ class _NewExpenseState extends State<NewExpense> {
     });
   }
 
+  void _submitExpenseData() {
+    final enteredAmount = double.tryParse(_amountController
+        .text); // double.tryParse("hello") -> null , double.tryParse(10.45) -> 10.45
+    final amountIsInvalid = enteredAmount == null || enteredAmount <= 0;
+    if (_titleController.text.trim().isEmpty ||
+        amountIsInvalid ||
+        _selectedDate == null) {
+      showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: const Text("Invalid Input"),
+          content: const Text("Please make sure you have put valid details."),
+          actions: [
+            TextButton(
+                onPressed: () {
+                  Navigator.pop(ctx);
+                },
+                child: const Text("Okay"))
+          ],
+        ),
+      );
+      return;
+    }
+  }
+
   @override
   void dispose() {
     // we'll have to delete the textEditingController after modal is not in use to free the memory.
@@ -53,7 +78,9 @@ class _NewExpenseState extends State<NewExpense> {
       padding: EdgeInsets.all(16),
       child: Column(
         children: [
-           const SizedBox(height: 12,),
+          const SizedBox(
+            height: 12,
+          ),
           TextField(
             controller: _titleController,
             maxLength: 50, //setting max string length
@@ -130,14 +157,13 @@ class _NewExpenseState extends State<NewExpense> {
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
-                  borderRadius:  BorderRadius.circular(30),
+                    borderRadius: BorderRadius.circular(30),
                   ),
-                ), 
+                ),
                 onPressed: () {
-                  print(_titleController.text);
+                  _submitExpenseData();
                 },
                 child: const Text("SAVE"),
-                
               ),
             ],
           )
