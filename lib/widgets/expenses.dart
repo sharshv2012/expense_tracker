@@ -21,14 +21,27 @@ class _ExpensesState extends State<Expenses> {
 
   void _openExpenseOverlay(){
     showModalBottomSheet(context: context, 
+     // isScrollControlled: true, for allocating it fullScreen
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical( // for providing corner radius to the modal.
         top: Radius.circular(25.0),
       ),
     ),
-    builder: (context) => const NewExpense() ,
+    builder: (context) => NewExpense(onAddExpense: _addExpense,) , 
     );
   }
+  void _addExpense(Expense expense) {
+    setState(() {
+      _registeredExpenses.add(expense);
+    });
+    
+  }
+  void _removeExpense(Expense expense){
+    setState(() {
+      _registeredExpenses.remove(expense);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
@@ -43,7 +56,7 @@ class _ExpensesState extends State<Expenses> {
         children: [
           const Text("the chart"),
           Expanded( // is you have a list inside a list or column use epanded.
-            child: ExpensesList(expenses: _registeredExpenses),
+            child: ExpensesList(expenses: _registeredExpenses , onRemoveExpense: _removeExpense,),
             )
         ],
       ),

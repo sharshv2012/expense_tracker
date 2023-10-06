@@ -1,3 +1,5 @@
+
+
 import 'package:expense_tracker/models/expense.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -5,7 +7,9 @@ import 'package:intl/intl.dart';
 final formatter = DateFormat('dd/MM/yyyy'); // for formatting date
 
 class NewExpense extends StatefulWidget {
-  const NewExpense({super.key});
+  const NewExpense({super.key, required this.onAddExpense}); 
+
+  final void Function(Expense expense) onAddExpense;
 
   @override
   State<StatefulWidget> createState() {
@@ -58,6 +62,15 @@ class _NewExpenseState extends State<NewExpense> {
       );
       return;
     }
+
+    widget.onAddExpense(
+      Expense(
+          title: _titleController.text,
+          amount: double.tryParse(_amountController.text)!,
+          date: _selectedDate!,
+          category: _selectedCategory
+        ),
+    );
   }
 
   @override
@@ -162,6 +175,7 @@ class _NewExpenseState extends State<NewExpense> {
                 ),
                 onPressed: () {
                   _submitExpenseData();
+                 Navigator.pop(context);
                 },
                 child: const Text("SAVE"),
               ),
