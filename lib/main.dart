@@ -5,7 +5,13 @@ import 'package:flutter/material.dart';
 
 void main() {
   runApp(
-    const MaterialApp(
+    MaterialApp(
+      theme: ThemeData().copyWith(
+        useMaterial3: true,
+        scaffoldBackgroundColor: Color.fromARGB(255, 210, 249, 194),
+      
+        ),
+
       home: Expenses(),
     ),
   );

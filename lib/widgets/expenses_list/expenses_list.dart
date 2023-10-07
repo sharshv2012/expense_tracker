@@ -10,12 +10,15 @@ class ExpensesList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // you shold not use column or listView without builder for lists where we don't know it's length and we might have many data items just like recyclerView in android native.
+    // you shold not use column or listView without builder for 
+    //lists where we don't know it's length and we might have many data items
+    // just like recyclerView in android native.
     return ListView.builder(
       itemCount: expenses.length,
-      itemBuilder: (ctx, index) => Dismissible(
+      itemBuilder: (ctx, index) => Dismissible(// wrap the widget for dissmissible property.
         key: ValueKey(expenses[index]),
-        onDismissed: (direction) {
+        onDismissed: (direction) { // we need to give a direction in case we 
+        //have different functionality for swiping from different directions.
           onRemoveExpense(expenses[index]);
         },
         child: ExpenseItem(expense: expenses[index]),
