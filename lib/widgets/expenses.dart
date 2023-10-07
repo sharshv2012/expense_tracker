@@ -71,7 +71,7 @@ class _ExpensesState extends State<Expenses> {
     }
     return  Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.cyanAccent,
+        //backgroundColor: Colors.cyanAccent,
         title: const Text("Get Your Expenses In Track"),
         actions: [
           IconButton(onPressed: _openExpenseOverlay, icon: const Icon(Icons.add)),

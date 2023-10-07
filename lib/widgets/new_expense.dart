@@ -63,7 +63,7 @@ class _NewExpenseState extends State<NewExpense> {
       return;
     }
 
-    widget.onAddExpense(
+    widget.onAddExpense( // if you want to use passed method or var to the class use widget keyword.
       Expense(
           title: _titleController.text,
           amount: double.tryParse(_amountController.text)!,
