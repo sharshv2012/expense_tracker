@@ -16,6 +16,12 @@ class ExpensesList extends StatelessWidget {
     return ListView.builder(
       itemCount: expenses.length,
       itemBuilder: (ctx, index) => Dismissible(// wrap the widget for dissmissible property.
+        background: Container(
+          color: Theme.of(context).colorScheme.error.withOpacity(0.75), // a variation of colors are set for different aspects by default.
+          margin: EdgeInsets.symmetric(
+            horizontal: Theme.of(context).cardTheme.margin!.horizontal,
+          ), 
+        ),
         key: ValueKey(expenses[index]),
         onDismissed: (direction) { // we need to give a direction in case we 
         //have different functionality for swiping from different directions.

@@ -79,7 +79,7 @@ class _ExpensesState extends State<Expenses> {
       ),
       body: Column(
         children: [
-          const Text("the chart"),
+          const SizedBox(height: 10),
           Expanded( // is you have a list inside a list or column use epanded.
             child: mainContent,
             )
