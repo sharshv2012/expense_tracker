@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 var kColorScheme = ColorScheme.fromSeed(
   seedColor: const Color.fromARGB(255, 96, 59, 181),
 );
+
 var kDarkColorScheme = ColorScheme.fromSeed(
-  brightness: Brightness.dark, // this will tell flutter that this colorScheme is for darkTheme.
+  brightness: Brightness.dark, // this will tell flutter that
+  // this colorScheme is for darkTheme.
   seedColor: Color.fromARGB(255, 5, 99, 125)
 );
 void main() {
@@ -28,6 +30,7 @@ void main() {
           ),
         ),
       ),
+
       theme: ThemeData().copyWith(
         useMaterial3: true,
         //scaffoldBackgroundColor: Color.fromARGB(255, 210, 249, 194),
@@ -36,7 +39,7 @@ void main() {
           backgroundColor: kColorScheme.onPrimaryContainer,
           foregroundColor: kColorScheme.primaryContainer,
         ),
-        cardTheme: CardTheme().copyWith(
+        cardTheme: const CardTheme().copyWith(
           color: kColorScheme.secondaryContainer,
           margin: const EdgeInsets.symmetric(
             horizontal: 16,

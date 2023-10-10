@@ -28,3 +28,24 @@ class Expense {
     return formatter.format(date);//to mutate any variable or element of the same class we are in.
   }
 }
+
+class ExpenseBucket {
+
+  
+  const ExpenseBucket({
+    required this.category,
+    required this.expenses,
+  });
+  
+  final Category category ;
+  final List<Expense> expenses;
+
+  double get totalExpense {
+    double sum = 0;
+    for(final i in expenses){
+      sum += i.amount;
+    }
+    return sum;
+  
+  }
+}

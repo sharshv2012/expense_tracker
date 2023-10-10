@@ -18,7 +18,8 @@ class ExpenseItem extends StatelessWidget{
         children: [
           Text(
             expense.title,
-            style: Theme.of(context).textTheme.titleLarge, //using the predefined theme for titles from main in this widget.
+            style: Theme.of(context).textTheme.titleLarge, //using the 
+            //predefined theme for titles from main in this widget.
             
           ),
           const SizedBox(height: 4),
