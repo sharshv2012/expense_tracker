@@ -42,7 +42,7 @@ class ExpenseBucket {
   final Category category ;
   final List<Expense> expenses;
 
-  double get totalExpense {
+  double get totalExpenses {
     double sum = 0;
     for(final i in expenses){
       sum += i.amount;
