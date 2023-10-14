@@ -11,15 +11,15 @@ var kDarkColorScheme = ColorScheme.fromSeed(
     // this colorScheme is for darkTheme.
     seedColor: Color.fromARGB(255, 5, 99, 125));
 void main() {
-  WidgetsFlutterBinding.ensureInitialized();// makes sure orientation is locked
-  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
-      .then((fn) {
+  // WidgetsFlutterBinding.ensureInitialized();// makes sure orientation is locked
+  // SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+  //     .then((fn) {
     runApp(
       MaterialApp(
         darkTheme: ThemeData.dark().copyWith(
           useMaterial3: true,
           colorScheme: kDarkColorScheme,
-          cardTheme: CardTheme().copyWith(
+          cardTheme: const CardTheme().copyWith(
             // we had to redefine this bcuz margin is non null in expenses list so it can give error.
             color: kDarkColorScheme.secondaryContainer,
             margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -58,5 +58,5 @@ void main() {
         home: const Expenses(),
       ),
     );
-  });
+  //});
 }
