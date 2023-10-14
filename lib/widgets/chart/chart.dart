@@ -22,7 +22,7 @@ class Chart extends StatelessWidget {
 
     for (final bucket in buckets) {
       if (bucket.totalExpenses > maxTotalExpense) {
-        maxTotalExpense = bucket.totalExpenses;
+        maxTotalExpense = bucket.totalExpenses; // finding the bucket with highest expense.
       }
     }
 

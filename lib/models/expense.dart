@@ -37,8 +37,12 @@ class ExpenseBucket {
     required this.expenses,
   });
  
-  ExpenseBucket.forCategory(List<Expense> allExpenses, this.category) //additional/alternative named constructor functions. forCategory is the name of the constructor
-     : expenses = allExpenses.where((expense) => expense.category == category).toList();
+  ExpenseBucket.forCategory(List<Expense> allExpenses, this.category)
+   //additional/alternative named constructor functions. //
+   //forCategory is the name of the constructor
+     : expenses = allExpenses.where((expense) => 
+              expense.category == category).toList();
+              
   final Category category ;
   final List<Expense> expenses;
 

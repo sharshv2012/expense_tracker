@@ -12,6 +12,7 @@ class ChartBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDarkMode =
         MediaQuery.of(context).platformBrightness == Brightness.dark;
+         // to check if device in dark mode
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 4),
