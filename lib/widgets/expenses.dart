@@ -1,4 +1,4 @@
-import 'dart:math';
+
 
 import 'package:expense_tracker/widgets/chart/chart.dart';
 import 'package:expense_tracker/widgets/expenses_list/expenses_list.dart';
@@ -64,8 +64,8 @@ class _ExpensesState extends State<Expenses> {
 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        duration: Duration(seconds: 3),
-        content: Text("Expense Deleted"),
+        duration: const Duration(seconds: 3),
+        content: const Text("Expense Deleted"),
         action: SnackBarAction(
             label: 'Undo',
             onPressed: () {

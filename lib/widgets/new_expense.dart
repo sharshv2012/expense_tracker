@@ -87,101 +87,104 @@ class _NewExpenseState extends State<NewExpense> {
   // }
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(16),
-      child: Column(
-        children: [
-          const SizedBox(
-            height: 12,
-          ),
-          TextField(
-            controller: _titleController,
-            maxLength: 50, //setting max string length
-            decoration: const InputDecoration(
-              label: Text("Title"),
-              border: OutlineInputBorder(),
+    final keyboardSpace = MediaQuery.of(context).viewInsets.bottom;
+    return SingleChildScrollView(
+      child: Padding(
+        padding: EdgeInsets.fromLTRB(16, 48, 16, 16 + keyboardSpace),
+        child: Column(
+          children: [
+            const SizedBox(
+              height: 12,
             ),
-          ),
-          Row(
-            children: [
-              Expanded(
-                //Same rendering issue can arise having TextField inside of a row that's why used Expanded.
-                child: TextField(
-                  controller: _amountController,
-                  maxLength: 10, //setting max string length
-                  keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(
-                    prefixText: "₹ ",
-                    label: Text("Expense"),
-                    border: OutlineInputBorder(),
+            TextField(
+              controller: _titleController,
+              maxLength: 50, //setting max string length
+              decoration: const InputDecoration(
+                label: Text("Title"),
+                border: OutlineInputBorder(),
+              ),
+            ),
+            Row(
+              children: [
+                Expanded(
+                  //Same rendering issue can arise having TextField inside of a row that's why used Expanded.
+                  child: TextField(
+                    controller: _amountController,
+                    maxLength: 10, //setting max string length
+                    keyboardType: TextInputType.number,
+                    decoration: const InputDecoration(
+                      prefixText: "₹ ",
+                      label: Text("Expense"),
+                      border: OutlineInputBorder(),
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(
-                width: 16,
-              ),
-              Expanded(
-                  child: Row(
-                // we are having a row inside of a row which can cause rendering problem that's why we are using Expanded.
-                mainAxisAlignment:
-                    MainAxisAlignment.end, // pushing icon and text to the end
-                crossAxisAlignment: CrossAxisAlignment
-                    .center, // for centering the item vertically
-                children: [
-                  Text(_selectedDate == null
-                      ? "No Date Selected"
-                      : formatter.format(_selectedDate!)),
-                  IconButton(
-                      onPressed: _presentDatePicker,
-                      icon: const Icon(Icons.calendar_month)),
-                ],
-              ))
-            ],
-          ),
-          const SizedBox(
-            height: 16,
-          ),
-          Row(
-            children: [
-              DropdownButton(
-                value: _selectedCategory,
-                items: Category.values
-                    .map(
-                      (Category) => DropdownMenuItem(
-                        value: Category,
-                        child: Text(
-                          Category.name.toUpperCase(),
+                const SizedBox(
+                  width: 16,
+                ),
+                Expanded(
+                    child: Row(
+                  // we are having a row inside of a row which can cause rendering problem that's why we are using Expanded.
+                  mainAxisAlignment:
+                      MainAxisAlignment.end, // pushing icon and text to the end
+                  crossAxisAlignment: CrossAxisAlignment
+                      .center, // for centering the item vertically
+                  children: [
+                    Text(_selectedDate == null
+                        ? "No Date Selected"
+                        : formatter.format(_selectedDate!)),
+                    IconButton(
+                        onPressed: _presentDatePicker,
+                        icon: const Icon(Icons.calendar_month)),
+                  ],
+                ))
+              ],
+            ),
+            const SizedBox(
+              height: 16,
+            ),
+            Row(
+              children: [
+                DropdownButton(
+                  value: _selectedCategory,
+                  items: Category.values
+                      .map(
+                        (Category) => DropdownMenuItem(
+                          value: Category,
+                          child: Text(
+                            Category.name.toUpperCase(),
+                          ),
                         ),
-                      ),
-                    )
-                    .toList(),
-                onChanged: (value) {
-                  setState(() {
-                    _selectedCategory = value!;
-                  });
-                },
-              ),
-              const Spacer(),
-              TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
+                      )
+                      .toList(),
+                  onChanged: (value) {
+                    setState(() {
+                      _selectedCategory = value!;
+                    });
                   },
-                  child: const Text("CANCEL")),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
                 ),
-                onPressed: () {
-                  _submitExpenseData();
-                 Navigator.pop(context);
-                },
-                child: const Text("SAVE"),
-              ),
-            ],
-          )
-        ],
+                const Spacer(),
+                TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text("CANCEL")),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                  ),
+                  onPressed: () {
+                    _submitExpenseData();
+                   Navigator.pop(context);
+                  },
+                  child: const Text("SAVE"),
+                ),
+              ],
+            )
+          ],
+        ),
       ),
     );
   }
