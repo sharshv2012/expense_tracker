@@ -37,7 +37,8 @@ class _ExpensesState extends State<Expenses> {
   void _openExpenseOverlay() {
     showModalBottomSheet(
       context: context,
-      // isScrollControlled: true, for allocating it fullScreen
+      isScrollControlled: MediaQuery.of(context).size.width > 600 ? true : false , //for allocating it fullScreen when in landScape
+      useSafeArea: true,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
           // for providing corner radius to the modal.
