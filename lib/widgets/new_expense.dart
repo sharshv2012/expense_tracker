@@ -1,6 +1,9 @@
 
 
+import 'dart:io';
+
 import 'package:expense_tracker/models/expense.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -39,14 +42,21 @@ class _NewExpenseState extends State<NewExpense> {
     });
   }
 
-  void _submitExpenseData() {
-    final enteredAmount = double.tryParse(_amountController
-        .text); // double.tryParse("hello") -> null , double.tryParse(10.45) -> 10.45
-    final amountIsInvalid = enteredAmount == null || enteredAmount <= 0;
-    if (_titleController.text.trim().isEmpty ||
-        amountIsInvalid ||
-        _selectedDate == null) {
-      showDialog(
+  showAlertDialog() {
+    if (Platform.isIOS){
+        showCupertinoDialog(context: context, builder: (ctx) => CupertinoAlertDialog(
+              title: const Text("Invalid Input"),
+          content: const Text("Please make sure you have put valid details."),
+          actions: [
+            TextButton(
+                onPressed: () {
+                  Navigator.pop(ctx);
+                },
+                child: const Text("Okay"))
+          ],
+          ),);
+    }else{
+        showDialog(
         context: context,
         builder: (ctx) => AlertDialog(
           title: const Text("Invalid Input"),
@@ -60,7 +70,20 @@ class _NewExpenseState extends State<NewExpense> {
           ],
         ),
       );
-      return;
+    }
+      
+      
+  }
+
+  void _submitExpenseData() {
+    final enteredAmount = double.tryParse(_amountController
+        .text); // double.tryParse("hello") -> null , double.tryParse(10.45) -> 10.45
+    final amountIsInvalid = enteredAmount == null || enteredAmount <= 0;
+    if (_titleController.text.trim().isEmpty ||
+        amountIsInvalid ||
+        _selectedDate == null) {
+          showAlertDialog();
+        return;
     }
 
     widget.onAddExpense( // if you want to use passed method or var to the class use widget keyword.
