@@ -1,7 +1,6 @@
-
-
 import 'dart:io';
-
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:expense_tracker/models/expense.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +9,7 @@ import 'package:intl/intl.dart';
 final formatter = DateFormat('dd/MM/yyyy'); // for formatting date
 
 class NewExpense extends StatefulWidget {
-  const NewExpense({super.key, required this.onAddExpense}); 
+  const NewExpense({super.key, required this.onAddExpense});
 
   final void Function(Expense expense) onAddExpense;
 
@@ -43,9 +42,11 @@ class _NewExpenseState extends State<NewExpense> {
   }
 
   showAlertDialog() {
-    if (Platform.isIOS){
-        showCupertinoDialog(context: context, builder: (ctx) => CupertinoAlertDialog(
-              title: const Text("Invalid Input"),
+    if (Platform.isIOS) {
+      showCupertinoDialog(
+        context: context,
+        builder: (ctx) => CupertinoAlertDialog(
+          title: const Text("Invalid Input"),
           content: const Text("Please make sure you have put valid details."),
           actions: [
             TextButton(
@@ -54,9 +55,10 @@ class _NewExpenseState extends State<NewExpense> {
                 },
                 child: const Text("Okay"))
           ],
-          ),);
-    }else{
-        showDialog(
+        ),
+      );
+    } else {
+      showDialog(
         context: context,
         builder: (ctx) => AlertDialog(
           title: const Text("Invalid Input"),
@@ -71,8 +73,31 @@ class _NewExpenseState extends State<NewExpense> {
         ),
       );
     }
-      
-      
+  }
+
+  Future<String> sendDataToApi(String title, String amount, String date, String category) async {
+    const String apiUrl = 'http://192.168.1.19:3000/saveRecords';
+    final Map<String, dynamic> data = {
+      'title': title,
+      'amount': amount ,
+      'date': date,
+      'category': category
+      // Add more key-value pairs as needed
+    };
+
+    final response = await http.post(
+      Uri.parse(apiUrl),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode(data),
+    );
+
+    if (response.statusCode == 200) {
+      print('Data sent successfully');
+    } else {
+      print('Failed to send data. Error: ${response.statusCode}');
+    }
+
+    return 'Data sent to API';
   }
 
   void _submitExpenseData() {
@@ -82,17 +107,23 @@ class _NewExpenseState extends State<NewExpense> {
     if (_titleController.text.trim().isEmpty ||
         amountIsInvalid ||
         _selectedDate == null) {
-          showAlertDialog();
-        return;
+      showAlertDialog();
+      return;
     }
 
-    widget.onAddExpense( // if you want to use passed method or var to the class use widget keyword.
+    sendDataToApi(_titleController.text.toString(), _amountController.text.toString(),
+    _selectedDate!.toString(),
+    _selectedCategory.toString()
+    );
+    print('hello');
+    widget.onAddExpense(
+      
+      // if you want to use passed method or var to the class use widget keyword.
       Expense(
           title: _titleController.text,
           amount: double.tryParse(_amountController.text)!,
           date: _selectedDate!,
-          category: _selectedCategory
-        ),
+          category: _selectedCategory),
     );
   }
 
@@ -200,7 +231,7 @@ class _NewExpenseState extends State<NewExpense> {
                   ),
                   onPressed: () {
                     _submitExpenseData();
-                   Navigator.pop(context);
+                    Navigator.pop(context);
                   },
                   child: const Text("SAVE"),
                 ),
