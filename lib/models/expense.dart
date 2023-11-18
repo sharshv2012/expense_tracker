@@ -8,10 +8,10 @@ final formatter = DateFormat('dd/MM/yyyy'); // for formatting date passed to thi
 enum Category {leisure, food, work, travel }
 
 const categoryIcons = { // A map, categories as keys
-  Category.food: Icons.lunch_dining,
-  Category.travel: Icons.flight_takeoff,
-  Category.leisure: Icons.movie,
-  Category.work: Icons.work,
+  "Category.food": Icons.lunch_dining,
+  "Category.travel": Icons.flight_takeoff,
+  "Category.leisure": Icons.movie,
+  "Category.work": Icons.work,
 };
 class Expense {
 

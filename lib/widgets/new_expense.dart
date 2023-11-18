@@ -9,9 +9,9 @@ import 'package:intl/intl.dart';
 final formatter = DateFormat('dd/MM/yyyy'); // for formatting date
 
 class NewExpense extends StatefulWidget {
-  const NewExpense({super.key, required this.onAddExpense});
+  const NewExpense({super.key});
 
-  final void Function(Expense expense) onAddExpense;
+  // final void Function(Expense expense) onAddExpense;
 
   @override
   State<StatefulWidget> createState() {
@@ -76,7 +76,7 @@ class _NewExpenseState extends State<NewExpense> {
   }
 
   Future<String> sendDataToApi(String title, String amount, String date, String category) async {
-    const String apiUrl = 'http://192.168.1.19:3000/saveRecords';
+    const String apiUrl = 'http://192.168.1.32:3000/saveRecords';
     final Map<String, dynamic> data = {
       'title': title,
       'amount': amount ,
@@ -116,15 +116,7 @@ class _NewExpenseState extends State<NewExpense> {
     _selectedCategory.toString()
     );
     print('hello');
-    widget.onAddExpense(
-      
-      // if you want to use passed method or var to the class use widget keyword.
-      Expense(
-          title: _titleController.text,
-          amount: double.tryParse(_amountController.text)!,
-          date: _selectedDate!,
-          category: _selectedCategory),
-    );
+    
   }
 
   @override

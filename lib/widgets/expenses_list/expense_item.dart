@@ -2,12 +2,18 @@ import 'package:expense_tracker/models/expense.dart';
 import 'package:flutter/material.dart';
 
 class ExpenseItem extends StatelessWidget{
-  const ExpenseItem({super.key, required this.expense});
+  const ExpenseItem({super.key, required this.record});
 
-  final Expense expense;
+  final Map<dynamic, dynamic> record;
 
   @override
   Widget build(BuildContext context) {
+
+    String amount = record['amount'];
+    String date = record['date'].toString().substring(0, 10);
+    double convertedAmount = double.parse(amount);
+    
+    
     return Card(child: Padding(
       padding: const EdgeInsets.symmetric( // for different paddings.
         horizontal: 24,
@@ -17,7 +23,7 @@ class ExpenseItem extends StatelessWidget{
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            expense.title,
+            record['title'],
             style: Theme.of(context).textTheme.titleLarge, //using the 
             //predefined theme for titles from main in this widget.
             
@@ -25,13 +31,13 @@ class ExpenseItem extends StatelessWidget{
           const SizedBox(height: 4),
           Row(
             children: [
-              Text("₹ ${expense.amount.toStringAsFixed(2)}"),//  12.3345 => 12.33
+              Text("₹ ${convertedAmount.toStringAsFixed(2)}"),//  12.3345 => 12.33
               const Spacer(),// all the space it can get between widgets.
               Row(
                 children: [
-                  Icon(categoryIcons[expense.category]),
+                  Icon(categoryIcons[record['category'].toString()]),
                   const SizedBox(width: 8),
-                  Text(expense.formattedDate)// we are using a getter that's why unlike a function it isn't takking value i.e. expense.date .
+                  Text(date)// we are using a getter that's why unlike a function it isn't takking value i.e. expense.date .
                 ],
               )
             ],
