@@ -6,7 +6,7 @@ class ExpensesList extends StatelessWidget {
   const ExpensesList(
       {super.key, required this.records, required this.onRemoveExpense});
   final List<dynamic>? records;
-  final void Function(Expense expense) onRemoveExpense;
+  final void Function(int index, String id) onRemoveExpense;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,7 @@ class ExpensesList extends StatelessWidget {
         key: ValueKey(records![index]),
         onDismissed: (direction) { // we need to give a direction in case we 
         //have different functionality for swiping from different directions.
-          onRemoveExpense(records![index]);
+          onRemoveExpense( index,records![index]['_id']);
         },
         child: ExpenseItem(record: records![index]),
       ), // for deleting the list item by swiping

@@ -42,10 +42,10 @@ class _ExpensesState extends State<Expenses> {
     print("hello");
   }
 
-  var Records = [];
+  List Records = [];
 
   Future getRecords() async {
-    const String apiUrl = 'http://192.168.1.32:3000/getRecords';
+    const String apiUrl = 'http://192.168.43.13:3000/getRecords';
 
     final response = await http.get(
       Uri.parse(apiUrl),
@@ -54,15 +54,10 @@ class _ExpensesState extends State<Expenses> {
 
     var jsonResponse = jsonDecode(response.body);
 
-    Records = (jsonResponse['success']);
-
-    
-    
-  
-
     setState(() {
-      
+      Records = (jsonResponse['success']);
     });
+    print("data fetched");
   }
 
   void _openExpenseOverlay() {
@@ -78,9 +73,9 @@ class _ExpensesState extends State<Expenses> {
           top: Radius.circular(25.0),
         ),
       ),
-      builder: (context) => const NewExpense(
-          // onAddExpense: _addExpense,
-          ),
+      builder: (context) => NewExpense(
+        getRecords: getRecords,
+      ),
     );
   }
 
@@ -89,34 +84,40 @@ class _ExpensesState extends State<Expenses> {
   //     _registeredExpenses.add(expense);
   //   });
   // }
-
-  void _removeExpense(dynamic element) {
-    final recordIndex = Records.indexOf(element);
-    setState(() {
-      Records.remove(element);
-    });
-
+  showSnackBarG(){
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        duration: const Duration(seconds: 3),
-        content: const Text("Expense Deleted"),
-        action: SnackBarAction(
-            label: 'Undo',
-            onPressed: () {
-              setState(() {
-                Records!.insert(recordIndex, element);
-              });
-            }),
+      const SnackBar(
+        duration: Duration(seconds: 3),
+        content: Text("Expense Deleted"),
       ),
     );
+  }
+  Future _removeExpense(int index, String id) async {
+    
+    const String apiUrl = 'http://192.168.43.13:3000/deleteRecord';
+    print("helloooo");
+    var reqBody = {"id": id};
+
+    final response = await http.post(Uri.parse(apiUrl),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode(reqBody));
+
+    var jsonResponse = jsonDecode(response.body);
+    if (jsonResponse['status']) {
+      // if true
+      setState(() {
+        getRecords();
+      });
+    }
+
+    showSnackBarG();
+
   }
 
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     // final height = MediaQuery.of(context).size.height; (no use)
-
-    
 
     return Scaffold(
       appBar: AppBar(
@@ -148,7 +149,6 @@ class _ExpensesState extends State<Expenses> {
                   //possible(check chart.dart) which will cause UI problem
                   //to avoid this use expanded.
                   child: Chart(records: Records),
-                  
                 ),
                 Expanded(
                   // is you have a list inside a list or row use expanded.

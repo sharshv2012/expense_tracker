@@ -9,9 +9,9 @@ import 'package:intl/intl.dart';
 final formatter = DateFormat('dd/MM/yyyy'); // for formatting date
 
 class NewExpense extends StatefulWidget {
-  const NewExpense({super.key});
+  const NewExpense({super.key, required this.getRecords});
 
-  // final void Function(Expense expense) onAddExpense;
+  final Future Function() getRecords;
 
   @override
   State<StatefulWidget> createState() {
@@ -76,7 +76,7 @@ class _NewExpenseState extends State<NewExpense> {
   }
 
   Future<String> sendDataToApi(String title, String amount, String date, String category) async {
-    const String apiUrl = 'http://192.168.1.32:3000/saveRecords';
+    const String apiUrl = 'http://192.168.43.13:3000/saveRecords';
     final Map<String, dynamic> data = {
       'title': title,
       'amount': amount ,
@@ -95,12 +95,16 @@ class _NewExpenseState extends State<NewExpense> {
       print('Data sent successfully');
     } else {
       print('Failed to send data. Error: ${response.statusCode}');
+
+
     }
+
+    
 
     return 'Data sent to API';
   }
 
-  void _submitExpenseData() {
+  void _submitExpenseData() async {
     final enteredAmount = double.tryParse(_amountController
         .text); // double.tryParse("hello") -> null , double.tryParse(10.45) -> 10.45
     final amountIsInvalid = enteredAmount == null || enteredAmount <= 0;
@@ -116,7 +120,13 @@ class _NewExpenseState extends State<NewExpense> {
     _selectedCategory.toString()
     );
     print('hello');
-    
+      
+
+    await widget.getRecords();
+
+    setState(() {
+      
+    });
   }
 
   @override
