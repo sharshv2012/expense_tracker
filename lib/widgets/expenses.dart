@@ -1,9 +1,9 @@
 import 'dart:convert';
-import 'dart:ffi';
+
 import 'package:http/http.dart' as http;
 import 'package:expense_tracker/widgets/chart/chart.dart';
 import 'package:expense_tracker/widgets/expenses_list/expenses_list.dart';
-import 'package:expense_tracker/models/expense.dart';
+
 import 'package:expense_tracker/widgets/new_expense.dart';
 import 'package:flutter/material.dart';
 
@@ -45,7 +45,7 @@ class _ExpensesState extends State<Expenses> {
   List Records = [];
 
   Future getRecords() async {
-    const String apiUrl = 'http://192.168.43.13:3000/getRecords';
+    const String apiUrl = 'http://192.168.29.74:3000/getRecords';
 
     final response = await http.get(
       Uri.parse(apiUrl),
@@ -93,8 +93,10 @@ class _ExpensesState extends State<Expenses> {
     );
   }
   Future _removeExpense(int index, String id) async {
+
+    Records.removeAt(index);
     
-    const String apiUrl = 'http://192.168.43.13:3000/deleteRecord';
+    const String apiUrl = 'http://192.168.29.74:3000/deleteRecord';
     print("helloooo");
     var reqBody = {"id": id};
 

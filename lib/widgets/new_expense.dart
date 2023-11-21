@@ -76,7 +76,7 @@ class _NewExpenseState extends State<NewExpense> {
   }
 
   Future<String> sendDataToApi(String title, String amount, String date, String category) async {
-    const String apiUrl = 'http://192.168.43.13:3000/saveRecords';
+    const String apiUrl = 'http://192.168.29.74:3000/saveRecords';
     final Map<String, dynamic> data = {
       'title': title,
       'amount': amount ,
@@ -158,7 +158,7 @@ class _NewExpenseState extends State<NewExpense> {
               decoration: const InputDecoration(
                 label: Text("Title"),
                 border: OutlineInputBorder(),
-              ),
+              ),//192.168.243.13
             ),
             Row(
               children: [

@@ -20,7 +20,7 @@ class Chart extends StatelessWidget {
         leisureSum += double.parse(record['amount']);
       } else if (record['category'] == "Category.travel") {
         travelSum += double.parse(record['amount']);
-      } else if (record['category'] == "category.work") {
+      } else if (record['category'] == "Category.work") {
         workSum += double.parse(record['amount']);
       }
     });
